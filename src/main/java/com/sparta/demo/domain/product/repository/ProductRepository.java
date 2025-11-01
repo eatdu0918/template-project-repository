@@ -1,0 +1,12 @@
+package com.sparta.demo.domain.product.repository;
+
+import com.sparta.demo.domain.product.entity.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface ProductRepository extends JpaRepository<Product,Long> {
+
+    // 상품명 검색
+    List<Product> findByNameContaining(String keyword);
+}

@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import com.sparta.demo.domain.product.dto.ProductFilterRequestDto;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,6 +38,18 @@ public class ProductController {
     @GetMapping
     public ApiResponse<List<ProductResponseDto>> getProducts() {
         return ApiResponse.success(productService.getProducts());
+    }
+
+    @PostMapping("/search")
+    public ApiResponse<List<ProductResponseDto>> getProductsByFilter(@RequestBody ProductFilterRequestDto request) {
+        return ApiResponse.success(
+                productService.getProductsByFilter(
+                        request.getCategoryId(),
+                        request.getMinPrice(),
+                        request.getMaxPrice(),
+                        request.getKeyword()
+                )
+        );
     }
 
     @PutMapping

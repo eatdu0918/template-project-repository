@@ -1,5 +1,6 @@
 package com.sparta.demo.domain.product.entity;
 
+import com.sparta.demo.domain.category.entity.Category;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

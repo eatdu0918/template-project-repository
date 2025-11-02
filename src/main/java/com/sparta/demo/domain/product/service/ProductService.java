@@ -2,16 +2,19 @@ package com.sparta.demo.domain.product.service;
 
 import com.sparta.demo.domain.product.dto.ProductRequestDto;
 import com.sparta.demo.domain.product.dto.ProductResponseDto;
-import com.sparta.demo.domain.product.entity.Category;
+import com.sparta.demo.domain.category.entity.Category;
 import com.sparta.demo.domain.product.entity.Product;
-import com.sparta.demo.domain.product.repository.CategoryRepository;
+import com.sparta.demo.domain.category.repository.CategoryRepository;
 import com.sparta.demo.domain.product.repository.ProductRepository;
+import com.sparta.demo.domain.product.repository.ProductSpecifications;
 import com.sparta.demo.global.exception.CustomException;
 import com.sparta.demo.global.exception.ErrorCode;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,8 +66,22 @@ public class ProductService {
                 .price(request.getPrice())
                 .stock(request.getStock())
                 .build();
+
         product.update(updatedProduct);
         productRepository.save(product);
         return ProductResponseDto.from(product);
+    }
+
+    public List<ProductResponseDto> getProductsByFilter(Long categoryId, BigDecimal minPrice, BigDecimal maxPrice, String keyword) {
+        Specification<Product> spec = Specification.allOf(
+                ProductSpecifications.hasCategoryId(categoryId),
+                ProductSpecifications.nameContains(keyword),
+                ProductSpecifications.priceBetween(minPrice, maxPrice)
+        );
+
+        List<Product> products = productRepository.findAll(spec);
+        return products.stream()
+                .map(ProductResponseDto::from)
+                .collect(Collectors.toList());
     }
 }

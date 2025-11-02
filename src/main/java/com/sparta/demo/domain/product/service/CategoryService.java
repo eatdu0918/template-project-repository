@@ -41,4 +41,27 @@ public class CategoryService {
 
         return CategoryResponseDto.from(category);
     }
+
+    @Transactional
+    public CategoryResponseDto updateCategory(CategoryRequestDto request) {
+        Category category = categoryRepository.findById(request.getId())
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_CATEGORY));
+
+        // parentId가 있으면 부모 카테고리 조회
+        Category parent = null;
+        if (request.getParentId() != null) {
+            parent = categoryRepository.findById(request.getParentId())
+                    .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_CATEGORY));
+        }
+
+        Category updatedCategory = Category.builder()
+                .name(request.getName())
+                .description(request.getDescription())
+                .parent(parent)  // 올바른 부모 카테고리 설정
+                .build();
+
+        category.update(updatedCategory);
+
+        return CategoryResponseDto.from(category);
+    }
 }

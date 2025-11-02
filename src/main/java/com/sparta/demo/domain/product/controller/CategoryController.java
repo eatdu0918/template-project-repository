@@ -24,5 +24,8 @@ public class CategoryController {
         return ApiResponse.success(categoryService.getCategory(id));
     }
 
-
+    @PutMapping
+    public ApiResponse<CategoryResponseDto> updateCategory(@RequestBody CategoryRequestDto request) {
+        return ApiResponse.success(categoryService.updateCategory(request));
+    }
 }

@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -42,13 +43,20 @@ public class Category {
     LocalDateTime createdAt;
 
     @Column(nullable = false)
-    @CreationTimestamp
+    @UpdateTimestamp
     LocalDateTime updatedAt;
 
     @Builder
-    public Category(String name, String description, Category parent) {
+    public Category(Long id, String name, String description, Category parent) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.parent = parent;
+    }
+
+    public void update(Category category) {
+        this.name = category.getName();
+        this.description = category.getDescription();
+        this.parent = category.getParent();
     }
 }

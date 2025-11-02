@@ -51,11 +51,20 @@ public class Product {
     LocalDateTime updatedAt;
 
     @Builder
-    public Product(Category category, String name, String description, BigDecimal price, Integer stock) {
+    public Product(Long id, Category category, String name, String description, BigDecimal price, Integer stock) {
+        this.id = id;
         this.category = category;
         this.name = name;
         this.description = description;
         this.price = price;
         this.stock = stock;
+    }
+
+    public void update(Product product) {
+        this.category = product.getCategory();
+        this.name = product.getName();
+        this.description = product.getDescription();
+        this.price = product.getPrice();
+        this.stock = product.getStock();
     }
 }

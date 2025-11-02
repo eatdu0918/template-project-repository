@@ -12,6 +12,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -32,6 +35,35 @@ public class ProductService {
                 .category(category)
                 .build();
 
+        productRepository.save(product);
+        return ProductResponseDto.from(product);
+    }
+
+    public ProductResponseDto getProduct(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_PRODUCT));
+        return ProductResponseDto.from(product);
+    }
+
+    public List<ProductResponseDto> getProducts() {
+        List<Product> products = productRepository.findAll();
+        return products.stream()
+                .map(ProductResponseDto::from)
+                .collect(Collectors.toList());
+    }
+
+    public ProductResponseDto updateProduct(ProductRequestDto request) {
+        Product product = productRepository.findById(request.getId())
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_PRODUCT));
+
+        Product updatedProduct = Product.builder()
+                .category(product.getCategory())
+                .name(request.getName())
+                .description(request.getDescription())
+                .price(request.getPrice())
+                .stock(request.getStock())
+                .build();
+        product.update(updatedProduct);
         productRepository.save(product);
         return ProductResponseDto.from(product);
     }

@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew:*)",
+      "Bash(gradle wrapper:*)",
+      "Bash(mkdir:*)",
+      "Bash(curl:*)",
+      "Bash(gh auth status:*)",
+      "Bash(cmdkey /delete:git:https://github.com)",
+      "Bash(git remote set-url:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

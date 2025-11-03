@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,6 +48,7 @@ public class OrderService {
                 .userId(request.getUserId())
                 .product(product)
                 .quantity(request.getQuantity())
+                .totalPrice(product.getPrice().multiply(BigDecimal.valueOf(request.getQuantity())))
                 .shippingAddress(request.getShippingAddress())
                 .status(OrderStatus.PENDING)
                 .build();

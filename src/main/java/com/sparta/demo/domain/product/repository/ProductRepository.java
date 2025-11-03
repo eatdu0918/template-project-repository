@@ -11,5 +11,5 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
     // 상품명 검색
     List<Product> findByNameContaining(String keyword);
 
-    long countByCategory_Id(Long categoryId);
+    long countByCategoryId(Long categoryId);
 }

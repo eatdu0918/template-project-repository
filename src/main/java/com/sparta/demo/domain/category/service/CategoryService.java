@@ -68,7 +68,7 @@ public class CategoryService {
     public java.util.List<CategoryResponseDto> getCategories() {
         java.util.List<com.sparta.demo.domain.category.entity.Category> categories = categoryRepository.findAll();
         return categories.stream()
-                .map(c -> CategoryResponseDto.from(c, productRepository.countByCategory_Id(c.getId())))
+                .map(c -> CategoryResponseDto.from(c, productRepository.countByCategoryId(c.getId())))
                 .toList();
     }
 }

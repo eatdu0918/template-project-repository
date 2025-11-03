@@ -10,9 +10,10 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Table
+@Table(name = "purchase")
 @Entity
 @Getter
 @NoArgsConstructor
@@ -34,6 +35,9 @@ public class Order {
     Integer quantity;
 
     @Column(nullable = false)
+    BigDecimal totalPrice;
+
+    @Column(name = "shopping_address", nullable = false)
     String shippingAddress;
 
     @Enumerated(EnumType.STRING)
@@ -49,9 +53,10 @@ public class Order {
     LocalDateTime updatedAt;
 
     @Builder
-    public Order(Long id, Long userId, Product product, Integer quantity, String shippingAddress, OrderStatus status) {
+    public Order(Long id, Long userId, Product product, Integer quantity, BigDecimal totalPrice, String shippingAddress, OrderStatus status) {
         this.id = id;
         this.userId = userId;
+        this.totalPrice = totalPrice;
         this.product = product;
         this.quantity = quantity;
         this.shippingAddress = shippingAddress;

@@ -84,4 +84,19 @@ public class ProductService {
                 .map(ProductResponseDto::from)
                 .collect(Collectors.toList());
     }
+//
+//    public List<Product> getAll() {
+//        return productRepository.findAll();
+//    }
+//
+//    public Product getById(Long id) {
+//        return productRepository.findById(id).orElseThrow();
+//    }
+//
+//    public Product create(Product product) {
+//        if (productRepository.existsByName(product.getName())) {
+//            throw new RuntimeException("it product already exists");
+//        }
+//        return productRepository.save(product);
+//    }
 }

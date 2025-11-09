@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     NOT_FOUND_PRODUCT(HttpStatus.NOT_FOUND, "상품을 찾을 수 없습니다."),
+//    ALREADY_HAVE_PRODUCT(),
     NOT_FOUND_CATEGORY(HttpStatus.NOT_FOUND, "카테고리를 찾을 수 없습니다."),
     NOT_FOUND_ORDER(HttpStatus.NOT_FOUND, "주문을 찾을 수 없습니다."),
     NOT_FOUND_REFUND(HttpStatus.NOT_FOUND, "환불을 찾을 수 없습니다."),
